@@ -19,3 +19,4 @@ It supports the following output formats:
 This backend is currently maintained by:
 
 * [Shubham Agarwal](https://github.com/blue-playground/)# pySigma-backend-pd_df
+# pySigma-backend-pd_df
