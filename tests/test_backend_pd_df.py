@@ -82,56 +82,60 @@ def test_pd_df_and_or_expression(pd_df_backend: PandasDataFramePythonBackend):
             )
         )
         == [
-            """df.query("(fieldA==['valueA1','valueA2']) and (fieldB==['valueB1','valueB2'])",inplace=True)"""
+            """df.query("(fieldA==['valueA1', 'valueA2']) and (fieldB==['valueB1', 'valueB2'])")"""
         ]
     )
 
-    # def test_pd_df_or_and_expression(pd_df_backend: PandasDataFramePythonBackend):
-    #     assert (
-    #         pd_df_backend.convert(
-    #             SigmaCollection.from_yaml(
-    #                 """
-    #             title: Test
-    #             status: test
-    #             logsource:
-    #                 category: test_category
-    #                 product: test_product
-    #             detection:
-    #                 sel1:
-    #                     fieldA: valueA1
-    #                     fieldB: valueB1
-    #                 sel2:
-    #                     fieldA: valueA2
-    #                     fieldB: valueB2
-    #                 condition: 1 of sel*
-    #         """
-    #             )
-    #         )
-    #         == ["<insert expected result here>"]
-    #     )
 
-    # def test_pd_df_in_expression(pd_df_backend: PandasDataFramePythonBackend):
-    #     assert (
-    #         pd_df_backend.convert(
-    #             SigmaCollection.from_yaml(
-    #                 """
-    #             title: Test
-    #             status: test
-    #             logsource:
-    #                 category: test_category
-    #                 product: test_product
-    #             detection:
-    #                 sel:
-    #                     fieldA:
-    #                         - valueA
-    #                         - valueB
-    #                         - valueC*
-    #                 condition: sel
-    #         """
-    #             )
-    #         )
-    #         == ["<insert expected result here>"]
-    #     )
+def test_pd_df_or_and_expression(pd_df_backend: PandasDataFramePythonBackend):
+    assert (
+        pd_df_backend.convert(
+            SigmaCollection.from_yaml(
+                """
+            title: Test
+            status: test
+            logsource:
+                category: test_category
+                product: test_product
+            detection:
+                sel1:
+                    fieldA: valueA1
+                    fieldB: valueB1
+                sel2:
+                    fieldA: valueA2
+                    fieldB: valueB2
+                condition: 1 of sel*
+        """
+            )
+        )
+        == [
+            """df.query("fieldA=='valueA1' and fieldB=='valueB1' or fieldA=='valueA2' and fieldB=='valueB2'")"""
+        ]
+    )
+
+
+def test_pd_df_in_expression(pd_df_backend: PandasDataFramePythonBackend):
+    assert (
+        pd_df_backend.convert(
+            SigmaCollection.from_yaml(
+                """
+            title: Test
+            status: test
+            logsource:
+                category: test_category
+                product: test_product
+            detection:
+                sel:
+                    fieldA:
+                        - valueA
+                        - valueB
+                        - valueC*
+                condition: sel
+        """
+            )
+        )
+        == ["<insert expected result here>"]
+    )
 
     # def test_pd_df_regex_query(pd_df_backend: PandasDataFramePythonBackend):
     #     assert (
