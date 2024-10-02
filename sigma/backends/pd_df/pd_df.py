@@ -32,9 +32,9 @@ class PandasDataFramePythonBackend(TextQueryBackend):
 
     # Generated query tokens
     token_separator: str = " "  # separator inserted between all boolean operators
-    or_token: ClassVar[str] = "or"
-    and_token: ClassVar[str] = "and"
-    not_token: ClassVar[str] = "not"
+    or_token: ClassVar[str] = "|"
+    and_token: ClassVar[str] = "&"
+    not_token: ClassVar[str] = "~"
     eq_token: ClassVar[str] = (
         "=="  # Token inserted between field and value (without separator)
     )
@@ -54,7 +54,7 @@ class PandasDataFramePythonBackend(TextQueryBackend):
 
     ### Escaping
     field_escape: ClassVar[str] = (
-        "\\"  # Character to escape particular parts defined in field_escape_pattern.
+        ""  # Character to escape particular parts defined in field_escape_pattern.
     )
     field_escape_quote: ClassVar[bool] = (
         True  # Escape quote string defined in field_quote
@@ -95,7 +95,7 @@ class PandasDataFramePythonBackend(TextQueryBackend):
     # Regular expression query as format string with placeholders {field}, {regex}, {flag_x} where x
     # is one of the flags shortcuts supported by Sigma (currently i, m and s) and refers to the
     # token stored in the class variable re_flags.
-    re_expression: ClassVar[str] = "{field}=~{regex}"
+    re_expression: ClassVar[str] = "{field}.str.contains('{regex}')"
     re_escape_char: ClassVar[str] = (
         "\\"  # Character used for escaping in regular expressions
     )
@@ -173,7 +173,7 @@ class PandasDataFramePythonBackend(TextQueryBackend):
     convert_or_as_in: ClassVar[bool] = True  # Convert OR as in-expression
     convert_and_as_in: ClassVar[bool] = True  # Convert AND as in-expression
     in_expressions_allow_wildcards: ClassVar[bool] = (
-        True  # Values in list can contain wildcards. If set to False (default) only plain values are converted into in-expressions.
+        False  # Values in list can contain wildcards. If set to False (default) only plain values are converted into in-expressions.
     )
     field_in_list_expression: ClassVar[str] = (
         "{field}{op}[{list}]"  # Expression for field in list of values as format string with placeholders {field}, {op} and {list}
