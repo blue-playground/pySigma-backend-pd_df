@@ -21,4 +21,4 @@ It is not thoroughly tested, use at your own risk.
 
 ## Next Steps
 
-Stay tuned to use this in your threat hunts directly 
+Stay tuned to use this in your threat hunts directly.
