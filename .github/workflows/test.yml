@@ -34,7 +34,7 @@ jobs:
         with:
           auth: ${{ secrets.GIST_SECRET }}
           gistID: 6a82669d19cf6e946aae0a9c9f046ff5
-          filename: blue-playground-pySigma-backend-pd_df.json
+          filename: test.json
           label: Coverage
           message: ${{ env.COVERAGE }}
           color: ${{ env.COVERAGE_COLOR }}
