@@ -1,5 +1,6 @@
-
-
+![Tests](https://github.com/blue-playground/pySigma-backend-pd_df/actions/workflows/test.yml/badge.svg)
+![Coverage Badge](https://img.shields.io/endpoint?url=https://gist.github.com/blue-playground/6a82669d19cf6e946aae0a9c9f046ff5)
+![Status](https://img.shields.io/badge/Status-pre--release-orange)
 
 
 # pySigma Pandas DataFrame Python Backend
