@@ -17,7 +17,9 @@ This backend is currently maintained by:
 
 ## Limitations
 
-It is not thoroughly tested, use at your own risk.
+All custom tests from the pysigma maintainers are working fine, to be tested for some more custom tests
+
+No major limitation observed yet, please feel free to raise an issue.
 
 ## Next Steps
 
