@@ -1,6 +1,6 @@
 import pytest
 from sigma.collection import SigmaCollection
-from backends.pd_df import PandasDataFramePythonBackend
+from sigma.backends.pd_df import PandasDataFramePythonBackend
 
 
 @pytest.fixture
