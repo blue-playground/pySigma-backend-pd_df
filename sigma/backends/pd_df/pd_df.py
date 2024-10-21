@@ -8,6 +8,7 @@ from sigma.types import (
     SigmaRegularExpressionFlag,
 )
 import sigma
+import json
 import re
 from typing import ClassVar, Dict, Tuple, Pattern, List, Any, Optional
 
@@ -18,6 +19,8 @@ class PandasDataFramePythonBackend(TextQueryBackend):
     name: ClassVar[str] = "Pandas DataFrame Python backend"
     formats: Dict[str, str] = {
         "default": "Plain Pandas DataFrame Python queries",
+        "min_pdninja": "Minified pdninja query format",
+        "ex_pdninja": "Extended pdninja query format"
     }
     requires_pipeline: bool = False  # This backend do not require any pipelines.
 
@@ -214,6 +217,40 @@ class PandasDataFramePythonBackend(TextQueryBackend):
     def finalize_query_default(
         self, rule: SigmaRule, query: str, index: int, state: ConversionState
     ) -> Any:
-        print(query)
         df_query = f"""df.query("{query}")"""
         return df_query
+    
+    def finalize_query_min_pdninja(
+        self, rule: SigmaRule, query: str, index: int, state: ConversionState
+    ) -> Any:
+        df_query = f"""{query}"""
+        return df_query
+    
+    def finalize_query_ex_pdninja(
+            self, rule: SigmaRule, query: str, index :int, state: ConversionState
+    ) -> Any:
+        rule_as_dict = rule.to_dict()
+
+        zircolite_rule = {
+            "title": rule_as_dict["title"],
+            "id": rule_as_dict["id"] if "id" in rule_as_dict else "",
+            "status": rule_as_dict["status"] if "status" in rule_as_dict else "",
+            "description": (
+                rule_as_dict["description"] if "description" in rule_as_dict else ""
+            ),
+            "author": rule_as_dict["author"] if "author" in rule_as_dict else "",
+            "tags": rule_as_dict["tags"] if "tags" in rule_as_dict else [],
+            "falsepositives": (
+                rule_as_dict["falsepositives"]
+                if "falsepositives" in rule_as_dict
+                else []
+            ),
+            "level": rule_as_dict["level"] if "level" in rule_as_dict else "",
+            "rule": [query],
+            "filename": "",
+        }
+        return zircolite_rule
+    
+    def finalize_output_ex_pdninja(self, queries: List[Dict]) -> str:
+        return json.dumps(list(queries))
+

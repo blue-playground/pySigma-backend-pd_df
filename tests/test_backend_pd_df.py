@@ -1,8 +1,3 @@
-import sys
-import os
-
-sys.path.append(os.getcwd() + "/sigma")
-
 import pytest
 from sigma.collection import SigmaCollection
 from backends.pd_df import PandasDataFramePythonBackend
