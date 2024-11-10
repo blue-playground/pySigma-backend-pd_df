@@ -245,7 +245,9 @@ class PandasDataFramePythonBackend(TextQueryBackend):
             "tags": rule_as_dict["tags"] if "tags" in rule_as_dict else [],
             "level": rule_as_dict["level"] if "level" in rule_as_dict else "",
             "rule": [query],
-            "filename": "",
+            "logsource": (
+                rule_as_dict["logsource"] if "logsource" in rule_as_dict else ""
+            ),
         }
         return pdninja_rule
 
