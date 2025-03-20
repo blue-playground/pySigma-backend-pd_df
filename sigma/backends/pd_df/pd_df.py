@@ -89,9 +89,9 @@ class PandasDataFramePythonBackend(TextQueryBackend):
     # String matching operators. if none is appropriate eq_token is used.
     startswith_expression: ClassVar[str] = "{field}.str.startswith({value})"
     endswith_expression: ClassVar[str] = "{field}.str.endswith({value})"
-    contains_expression: ClassVar[str] = "{field}.str.contains({value})"
+    contains_expression: ClassVar[str] = "{field}.str.contains({value}, case=False)"
     wildcard_match_expression: ClassVar[str] = (
-        "{field} match {value}"  # Special expression if wildcards can't be matched with the eq_token operator
+        "{field}.str.contains({value})"  # Special expression if wildcards can't be matched with the eq_token operator
     )
 
     # Regular expressions
@@ -123,13 +123,13 @@ class PandasDataFramePythonBackend(TextQueryBackend):
     # Case sensitive string matching operators similar to standard string matching. If not provided,
     # case_sensitive_match_expression is used.
     case_sensitive_startswith_expression: ClassVar[str] = (
-        "{field} casematch_startswith {value}"
+        "{field}.str.startswith({value})"
     )
     case_sensitive_endswith_expression: ClassVar[str] = (
-        "{field} casematch_endswith {value}"
+        "{field}.str.endswith({value})"
     )
     case_sensitive_contains_expression: ClassVar[str] = (
-        "{field} casematch_contains {value}"
+        "{field}.str.contains({value}, flags={re_flags})"
     )
 
     # CIDR expressions: define CIDR matching if backend has native support. Else pySigma expands
