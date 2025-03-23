@@ -87,18 +87,18 @@ class PandasDataFramePythonBackend(TextQueryBackend):
     )
 
     # String matching operators. if none is appropriate eq_token is used.
-    startswith_expression: ClassVar[str] = "{field}.str.startswith({value})"
-    endswith_expression: ClassVar[str] = "{field}.str.endswith({value})"
-    contains_expression: ClassVar[str] = "{field}.str.contains({value}, case=False)"
+    startswith_expression: ClassVar[str] = "{field}.str.contains(r{value}, case=False)"
+    endswith_expression: ClassVar[str] = "{field}.str.contains(r{value}, case=False)"
+    contains_expression: ClassVar[str] = "{field}.str.contains(r{value}, case=False)"
     wildcard_match_expression: ClassVar[str] = (
-        "{field}.str.contains({value})"  # Special expression if wildcards can't be matched with the eq_token operator
+        "{field}.str.contains(r{value})"  # Special expression if wildcards can't be matched with the eq_token operator
     )
 
     # Regular expressions
     # Regular expression query as format string with placeholders {field}, {regex}, {flag_x} where x
     # is one of the flags shortcuts supported by Sigma (currently i, m and s) and refers to the
     # token stored in the class variable re_flags.
-    re_expression: ClassVar[str] = "{field}.str.contains('{regex}')"
+    re_expression: ClassVar[str] = "{field}.str.contains(r'{regex}')"
     re_escape_char: ClassVar[str] = (
         "\\"  # Character used for escaping in regular expressions
     )
