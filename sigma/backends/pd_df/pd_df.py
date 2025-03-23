@@ -87,18 +87,18 @@ class PandasDataFramePythonBackend(TextQueryBackend):
     )
 
     # String matching operators. if none is appropriate eq_token is used.
-    startswith_expression: ClassVar[str] = "{field}.str.contains(r{value}, case=False, regex=False)"
-    endswith_expression: ClassVar[str] = "{field}.str.contains(r{value}, case=False, regex=False)"
-    contains_expression: ClassVar[str] = "{field}.str.contains(r{value}, case=False, regex=False)"
+    startswith_expression: ClassVar[str] = "{field}.fillna('').str.contains(r{value}, case=False, regex=False)"
+    endswith_expression: ClassVar[str] = "{field}.fillna('').str.contains(r{value}, case=False, regex=False)"
+    contains_expression: ClassVar[str] = "{field}.fillna('').str.contains(r{value}, case=False, regex=False)"
     wildcard_match_expression: ClassVar[str] = (
-        "{field}.str.contains(r{value})"  # Special expression if wildcards can't be matched with the eq_token operator
+        "{field}.fillna('').str.contains(r{value})"  # Special expression if wildcards can't be matched with the eq_token operator
     )
 
     # Regular expressions
     # Regular expression query as format string with placeholders {field}, {regex}, {flag_x} where x
     # is one of the flags shortcuts supported by Sigma (currently i, m and s) and refers to the
     # token stored in the class variable re_flags.
-    re_expression: ClassVar[str] = "{field}.str.contains(r'{regex}')"
+    re_expression: ClassVar[str] = "{field}.fillna('').str.contains(r'{regex}')"
     re_escape_char: ClassVar[str] = (
         "\\"  # Character used for escaping in regular expressions
     )
@@ -119,17 +119,17 @@ class PandasDataFramePythonBackend(TextQueryBackend):
 
     # Case sensitive string matching expression. String is quoted/escaped like a normal string.
     # Placeholders {field} and {value} are replaced with field name and quoted/escaped string.
-    case_sensitive_match_expression: ClassVar[str] = "{field} casematch {value}"
+    case_sensitive_match_expression: ClassVar[str] = "{field}.fillna('').str.contains(r'{value}')"
     # Case sensitive string matching operators similar to standard string matching. If not provided,
     # case_sensitive_match_expression is used.
     case_sensitive_startswith_expression: ClassVar[str] = (
-        "{field}.str.startswith({value})"
+        "{field}.fillna('').str.startswith({value})"
     )
     case_sensitive_endswith_expression: ClassVar[str] = (
-        "{field}.str.endswith({value})"
+        "{field}.fillna('').str.endswith({value})"
     )
     case_sensitive_contains_expression: ClassVar[str] = (
-        "{field}.str.contains({value}, flags={re_flags})"
+        "{field}.fillna('').str.contains({value}, flags={re_flags})"
     )
 
     # CIDR expressions: define CIDR matching if backend has native support. Else pySigma expands
