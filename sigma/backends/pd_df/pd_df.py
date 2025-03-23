@@ -87,9 +87,9 @@ class PandasDataFramePythonBackend(TextQueryBackend):
     )
 
     # String matching operators. if none is appropriate eq_token is used.
-    startswith_expression: ClassVar[str] = "{field}.str.contains(r{value}, case=False)"
-    endswith_expression: ClassVar[str] = "{field}.str.contains(r{value}, case=False)"
-    contains_expression: ClassVar[str] = "{field}.str.contains(r{value}, case=False)"
+    startswith_expression: ClassVar[str] = "{field}.str.contains(r{value}, case=False, regex=False)"
+    endswith_expression: ClassVar[str] = "{field}.str.contains(r{value}, case=False, regex=False)"
+    contains_expression: ClassVar[str] = "{field}.str.contains(r{value}, case=False, regex=False)"
     wildcard_match_expression: ClassVar[str] = (
         "{field}.str.contains(r{value})"  # Special expression if wildcards can't be matched with the eq_token operator
     )

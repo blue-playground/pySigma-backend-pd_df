@@ -130,7 +130,7 @@ def test_pd_df_in_expression(pd_df_backend: PandasDataFramePythonBackend):
             )
         )
         == [
-            """df.query("fieldA=='valueA' | fieldA=='valueB' | fieldA.str.contains(r'valueC', case=False)")"""
+            """df.query("fieldA=='valueA' | fieldA=='valueB' | fieldA.str.contains(r'valueC', case=False, regex=False)")"""
         ]
     )
 
@@ -174,7 +174,7 @@ def test_pd_df_cidr_query(pd_df_backend: PandasDataFramePythonBackend):
         """
             )
         )
-        == ["""df.query("field.str.contains(r'192.168.', case=False)")"""]
+        == ["""df.query("field.str.contains(r'192.168.', case=False, regex=False)")"""]
     )
 
 
