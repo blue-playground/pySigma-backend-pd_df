@@ -23,4 +23,4 @@ No major limitation observed yet, please feel free to raise an issue.
 
 ## Next Steps
 
-Stay tuned to use this in your threat hunts directly
+Stay tuned to use this in your threat hunts directly.
